@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block extra_head %}
+  <style>
+    tr[data-href] {
+        cursor: pointer;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+    <div class="col-4">
+        <form method="GET" action=".">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="card-title">Search food:</label>
+                    <input type="search" name="FoodDesc" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Search</button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>Food Code</th>
+                        <th>Main Food Description</th>
+                        <th>Additional Food Description</th>
+                        <th>Refuse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for food in mainfood %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'recurapp:nutrient_search' food.food_code %}">{{ food.food_code }}</a>
+                            </td>
+                            <td>
+                                {{ food.main_food_description }}
+                            </td>
+                            <td>
+                                {% for add in food.AddDescs.all %}
+                                    {{ add.additional_food_description }},
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="{% url 'recurapp:ndb_search' food.food_code %}">Refuse</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-8">
+
+    </div>
+
+<script>
+var x = 100
+    $(document).ready(function() {
+        $(document.body).on("click", "tr[data-href]", function () {
+            window.location.href = this.dataset.href;
+        });
+    });
+</script>
+{% endblock %}

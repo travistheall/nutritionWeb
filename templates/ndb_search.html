@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if Food_codes %}
+        <h1>Food Codes as Ingredients</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Food Code</th>
+                        <th scope="col">Main Food Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in Food_codes %}
+                        <tr>
+                            <td scope="row">{{ x.food_code }}</td>
+                            <td>{{ x.main_food_description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if SR_codes %}
+        <h1>SR Codes as Ingredients</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">NDB NO</th>
+                        <th scope="col">Long Description</th>
+                        <th scope="col">Refuse</th>
+                        <th scope="col">Refuse Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in SR_codes %}
+                        <tr>
+                            <th scope="row">{{ x.ndb_no }}</th>
+                            <td>{{ x.long_desc }}</td>
+                            <td>{{ x.refuse }}</td>
+                            <td>{{ x.ref_desc }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if Q_codes %}
+    <h1>Question Codes as Ingredients</h1>
+    <div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="col">What to do with these?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in Q_codes %}
+                <th scope="row">{{ x }}</th>
+            {% endfor %}
+    {% endif %}
+{% endblock %}

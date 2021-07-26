@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="card">
+    <h5 class="card-title">hi {% if request.user.username == 'travi' %}{{ request.user }}{% endif %}</h5>
+</div>
+{% endblock %}

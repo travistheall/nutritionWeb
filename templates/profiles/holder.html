@@ -1,0 +1,100 @@
+<script>
+
+    let portionObj = {
+        {% for weight in main.Weights.all %}
+           portion_code:
+            {% if forloop.first %}
+                [{{ weight.portion_code.portion_code }},
+            {% elif forloop.last %}
+                {{ weight.portion_code.portion_code }}]
+            {% else %}
+                {{ weight.portion_code.portion_code }},
+            {% endif %}
+        {% endfor %}
+        portion_description:
+        {% for weight in main.Weights.all %}
+            {% if forloop.first %}
+                ["{{ weight.portion_code.portion_description }}",
+            {% elif forloop.last %}
+                "{{ weight.portion_code.portion_description }}"]
+            {% else %}
+                "{{ weight.portion_code.portion_description }}",
+            {% endif %}
+        {% endfor %}
+        weight:
+        {% for weight in main.Weights.all %}
+            {% if forloop.first %}
+                [{{ weight.portion_weight }},
+            {% elif forloop.last %}
+                {{ weight.portion_weight }}]
+            {% else %}
+                {{ weight.portion_weight }},
+            {% endif %}
+        {% endfor %}
+    }
+
+
+
+    let nutrientObjs = {
+       tagname:
+           {% for x in mainNutVal %}
+                {% if forloop.first %}
+                    ["{{ x.nutrient_code.tagname }}",
+                {% elif forloop.last %}
+                    "{{ x.nutrient_code.tagname }}"]
+                {% else %}
+                    "{{ x.nutrient_code.tagname }}",
+                {% endif %}
+            {% endfor %},
+        nutrient_description:
+            {% for x in mainNutVal %}
+                {% if forloop.first %}
+                    ["{{ x.nutrient_code.nutrient_description }}",
+                {% elif forloop.last %}
+                    "{{ x.nutrient_code.nutrient_description }}"]
+                {% else %}
+                    "{{ x.nutrient_code.nutrient_description }}",
+                {% endif %}
+            {% endfor %},
+        nutrient_value:
+        {% for x in mainNutVal %}
+            {% if forloop.first %}
+                [{{ x.nutrient_value }},
+            {% elif forloop.last %}
+                {{ x.nutrient_value }}]
+            {% else %}
+                {{ x.nutrient_value }},
+            {% endif %}
+        {% endfor %}
+    }
+
+    function createPortionCodeObj(portion_code, portion_description, portion_weight){
+        return {
+            portion_code: portion_code,
+            portion_description: portion_description,
+            portion_weight: portion_weight,
+        }
+    }
+    {% for weight in main.Weights.all %}
+        let portion{{ forloop.counter0 }} = {
+            portion_code: {{ weight.portion_code.portion_code }},
+            portion_description: "{{ weight.portion_code.portion_description }}",
+            weight:  {{ weight.portion_weight }}
+        }
+    {% endfor %}
+    function createNutrients(tagname, nutrient_description, nutrient_value) {
+        return {
+            tagname: tagname,
+            nutrient_description: nutrient_description,
+            nutrient_value: nutrient_value,
+        };
+    };
+
+    {% for x in mainNutVal %}
+        let {{ x.nutrient_code.tagname }} = createNutrients(
+                "{{ x.nutrient_code.tagname }}",
+                "{{ x.nutrient_code.nutrient_description }}",
+                {{ x.nutrient_value }}
+            )
+    {% endfor %}
+</script>

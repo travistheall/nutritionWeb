@@ -1,0 +1,6 @@
+{% load static %}
+    <div class="sidebar">
+        <a {% if home %}class="active"{% endif %} href="{% url 'recurapp:home' %}">Home</a>
+        <a {% if nutsearch %}class="active"{% endif %} href="{% url 'recurapp:desc_search' %}">Food Search</a>
+        <a {% if user_calories %}class="active"{% endif %} href="{% url 'recurapp:calorieDisplay' %}">User Calories</a>
+    </div>

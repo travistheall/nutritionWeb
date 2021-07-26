@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="card">
+    <div class="row">
+        <div class="col-4">
+            <img src="{% static "sitepic/active.jpg" %}" class="card-img" alt="girl running image">
+        </div>
+        <div class="col-8">
+            <h5 class="card-title">Calories</h5>
+                <div class="row">
+                    <p class="col-2">Age:</p>
+                    <div class="col-3">
+                        {{ customUser.age }}
+                    </div>
+                    <p class="col-2">Gender:</p>
+                    <div class="col-3">
+                        {{ customUser.get_sex_display }}
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="col-2">Weight:</p>
+                    <div class="col-3">
+                        {{ customUser.weight }}
+                    </div>
+                    <p class="col-2">Weight Unit:</p>
+                    <div class="col-3">
+                        {{ customUser.get_weightUnit_display }}
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="col-2">Height:</p>
+                    <div class="col-3">
+                        {{ customUser.height }}
+                    </div>
+                    <label class="col-2">Height Unit:</label>
+                    <div class="col-3">
+                        {{ customUser.get_heightUnit_display }}
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="col-2">Activity Level:</p>
+                    <div class="col-3">
+                        {{ customUser.get_activityLevel_display }}
+                    </div>
+                    <div class="col-4">
+                        <p>{{ calories }} Calories Per Day</p>
+                    </div>
+                </div>
+                 <div class="row justify-content-md-center">
+                    <div class="col-1">
+                        <a href="{% url 'recurapp:calorieCreate' %}" class="btn btn-primary">Update</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+    <div class="card">
+    <div class="row">
+        <div class="col-4">
+            <img src="{% static "sitepic/active.jpg" %}" class="card-img" alt="girl running image">
+        </div>
+        <div class="col-8">
+            <div class="col-11 py-3">
+                <h5 class="card-title">Calories</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group row">
+                        {{ field.errors }}
+                            <div class="col-2">
+                                {{ field.label_tag }}
+                            </div>
+                            <div class="col-5">
+                                {{ field }}
+                            </div>
+                            {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="col-2">
+                        <input type="submit" value="Submit" class="btn btn-primary" onclick="calculateCalories()"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+    <script>
+        document.getElementById("id_user").value = {{ user.id }};
+        document.
+    function calculateCalories() {
+        let sex = parseInt(document.getElementById("id_sex").value);
+        let age = parseInt(document.getElementById("id_age").value);
+        let weight = parseFloat(document.getElementById("id_weight").value);
+        let weightUnit = parseFloat(document.getElementById("id_weightUnit").value);
+        let height = parseFloat(document.getElementById("id_height").value);
+        let heightUnit = parseFloat(document.getElementById("id_heightUnit").value);
+        let activityLevel = document.getElementById("id_activityLevel").value;
+        let BMR = ((10 * (weight / weightUnit)) + (6.25 * (height * heightUnit)) - (5 * age) + sex) * activityLevel
+        document.getElementById("id_BMR").value = Number(BMR).toFixed(0);
+        if (isNaN(BMR)){
+            document.getElementById("calorieDisplay").innerHTML = "Please complete the form."
+        }
+    }
+    </script>
+{% endblock %}
